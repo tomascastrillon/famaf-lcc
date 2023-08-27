@@ -2,34 +2,36 @@
 --Apartado a)
 esCero :: Int -> Bool
 esCero x = x == 0
--- *Main> paraTodo [True,True,True]
--- True
+--ghci> esCero 2
+--False
+--ghci> esCero 0
+--True
 
 
 --Apartado b)
 esPositivo::Int-> Bool
 esPositivo x = x>0
---Ejemplo: I:esPositivo 2  
---O:True
---Ejemplo: I:esPositivo (-3)
---O:False
+--ghci> esPositivo (-5)
+--False
+--ghci> esPositivo 1
+--True
 
 --Apartado c)
 esVocal::Char -> Bool
 esVocal x = x=='a'|| x=='e'|| x=='i'|| x=='o'|| x=='u'
---Ejemplo: I:esVocal 'a'  
---O:True
---Ejemplo: I:esVocal 'b'
---O:False
+--ghci> esVocal 'a'
+--True
+--ghci> esVocal 'd'
+--False
 
 --Apartado d)
 valorAbsoluto::Int -> Int
 valorAbsoluto x | x>=0 = x  
                 | x<0 = -x
---Ejemplo: I:valorAbsoluto 1  
---O:1
---Ejemplo: I:valorAbsoluto (-2)
---O:2
+--ghci> valorAbsoluto 10
+--10
+--ghci> valorAbsoluto (-5)
+--5
 
 --Ejercicio 2
 --Apartado a)
@@ -235,4 +237,43 @@ sonPrimos' :: [Int] -> [Int]
 sonPrimos' xs = filter esPrimo xs
 
 --Apartado c)
---Ya mejorada 
+--Ya mejorada (carita fachera)
+
+-- Ejercicio 10
+-- Apartado a)
+primIgualesA :: (Eq a) => a -> [a] -> [a]
+primIgualesA d [] = []
+primIgualesA d (x:xs) | (x==d) = x : primIgualesA d xs
+                      | otherwise = []
+--ghci> primIgualesA 'q' "dq34"
+--""
+--ghci> primIgualesA '3' "3334567"
+--"333"
+
+-- Apartado b)
+primIgualesA' :: (Eq a) => a -> [a] -> [a]
+primIgualesA' d xs = takeWhile (==d) xs
+--ghci> primIgualesA' 8 [7,3,4,1]
+--[]
+--ghci> primIgualesA' 8 [8,8,8,0]
+--[8,8,8]
+
+--Ejercicio 11
+--Apartado a)
+primIguales :: (Eq a) => [a] -> [a]
+primIguales [] = []
+primIguales [x] = [x]
+primIguales (x:xs) | (x==head xs) = x : primIguales xs
+                   | otherwise = [x]
+--ghci> primIguales "111235"
+--"111"
+--ghci> primIguales [1,4,5,6]
+--[1]
+
+--Apartado b)
+primIguales' :: (Eq a) => [a] -> [a]
+primIguales' xs = primIgualesA' (head xs) xs    
+--ghci> primIguales' "333"
+--"333"
+--ghci> primIguales' []
+--[]        
