@@ -39,9 +39,9 @@ paratodo::[Bool]->Bool
 paratodo []=True
 paratodo (x:xs) | x = paratodo xs
                 | otherwise = False
--- *Main> paraTodo [True,True,True]
+-- *Main> paratodo [True,True,True]
 -- True
--- *Main> paraTodo [True,False,True]
+-- *Main> paratodo [True,False,True]
 -- False
 
 --Apartado b)
@@ -66,9 +66,9 @@ productoria (x:xs) = x* productoria xs
 factorial :: Int -> Int
 factorial 0 = 1
 factorial n = n*factorial (n-1)
--- *Main> productoria [2,3]
---6
--- *Main> productoria []
+-- *Main> factorial 4
+--24
+-- *Main> factorial 0
 --1
 
 promedio::[Int]->Int
@@ -83,10 +83,10 @@ pertenece :: Int -> [Int] -> Bool
 pertenece n [] = False
 pertenece n (x:xs) | n == x = True
                    | otherwise = pertenece n xs
--- *Main> promedio [8,8,10]
---8
--- *Main> promedio [8,9,10]
---9
+-- *Main> pertenece 5 [5,6,9]
+--True
+-- *Main> pertenece 1 [8,9,10]
+--False
 
 --Ejercicio 4
 --Apartado a)
@@ -149,7 +149,11 @@ esMultiplo :: Int -> Int -> Bool
 esMultiplo x y = y `mod` x == 0
 
 hayMultiplo :: Int -> [Int] -> Bool
-hayMultiplo n xs = existe' xs (esMultiplo n) -- no anda con mod
+hayMultiplo n xs = existe' xs (esMultiplo n)
+--ghci> hayMultiplo 3 [10,2]
+--False
+--ghci> hayMultiplo 5 [10,0,0]
+--True
 
 --Apartado c)
 sumaCuadrados :: Int -> Int
@@ -172,11 +176,19 @@ existeDivisor n ls = existe' ls (esDivisor n)
 
 --Apartado e)
 esPrimo :: Int -> Bool
-esPrimo n = not (existeDivisor n [2..(n-1)]) -- no optimo preguntar profe
+esPrimo n = not (existeDivisor n [2..(n-1)])
+--ghci> esPrimo 1011
+--False
+--ghci> esPrimo 1013
+--True
 
 --Apartado f)
 factorial' :: Int -> Int
 factorial' n = productoria [1..n] -- indirectamene usa recursividad
+--ghci> factorial' 0
+--1
+--ghci> factorial' 7
+--5040
 
 --Apartado g) 
 multiplicaPrimos :: [Int] -> Int
@@ -188,16 +200,30 @@ multiplicaPrimos xs = productoria (filter esPrimo xs)
 
 --Apartado h)
 fib :: Int -> Int
+fib 0 = 0
 fib 1 = 1
-fib 2 = 1
 fib n = fib (n-1)+fib (n-2)
 
---esFib :: Int -> Bool
---esFib n = existe' 
+listfib :: Int -> [Int] -> [Int]
+listfib n [] = []
+listfib n (x:xs) | fib x > n = []
+                 | fib x == n = [x]
+                 | otherwise = listfib n xs 
 
---Apartado I)
---todosFib :: [Int] -> Bool
---todosFib xs = paratodo' xs (esFib)
+esFib :: Int -> Bool
+esFib n = existe' (listfib n [0..(n+1)]) (>=1)
+--ghci> esFib 10
+--False
+--ghci> esFib 21
+--True
+
+--Apartado i)
+todosFib :: [Int] -> Bool
+todosFib xs = paratodo' xs (esFib)
+--ghci> todosFib [1,1,1,1,89]
+--True
+--ghci> todosFib [1,5,9]
+--False
 
 --Ejercicio 7
 --Map toma una lista y aplica una funcion f a cada elemento de la lista, construyendo una nueva lista retornandola
@@ -224,6 +250,8 @@ duplica' :: [Int] -> [Int]
 duplica' xs = map (*2) xs
 -- *Main> duplica' [5,3,8]
 --[10,6,16]
+--ghci> duplica' [7,9,20]
+--[14,18,40]
 
 --Ejercicio 9
 --Apartado a)
@@ -231,13 +259,21 @@ sonPrimos::[Int]->[Int]
 sonPrimos [] = []
 sonPrimos (x:xs) | esPrimo x = x : sonPrimos xs
                  | otherwise = sonPrimos xs
+--ghci> sonPrimos [17,31,1013]
+--[17,31,1013]
+--ghci> sonPrimos [5,6,7,8,9]
+--[5,7]
 
 --Apartado b)
 sonPrimos' :: [Int] -> [Int]
 sonPrimos' xs = filter esPrimo xs
+--ghci> sonPrimos' [6,8,10]
+--[]
+--ghci> sonPrimos' [6, 7, 19]
+--[7,19]
 
 --Apartado c)
---Ya mejorada (carita fachera)
+--Ya mejorada :D
 
 -- Ejercicio 10
 -- Apartado a)
@@ -277,3 +313,19 @@ primIguales' xs = primIgualesA' (head xs) xs
 --"333"
 --ghci> primIguales' []
 --[]        
+
+--Ejercicio 12
+
+
+
+
+
+
+
+
+
+
+
+
+
+
