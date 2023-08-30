@@ -1,3 +1,4 @@
+import Language.Haskell.TH (prim)
 --Ejercicio 1
 --Apartado a)
 esCero :: Int -> Bool
@@ -316,6 +317,20 @@ primIguales' xs = primIgualesA' (head xs) xs
 
 --Ejercicio 12
 
+--Ejercicio 13
+distanciaEdicion :: [Char] -> [Char] -> Int
+distanciaEdicion xs [] = length xs
+distanciaEdicion [] ys = length ys
+distanciaEdicion (x:xs) (y:ys) | x==y = distanciaEdicion xs ys
+                               | otherwise = 1 + distanciaEdicion xs ys
+
+--Ejercicio 14
+primQueCumplen :: (Eq a)=>[a] -> (a->Bool)->[a]
+primQueCumplen [] p = []
+primQueCumplen (x:xs) p | p x = x : primQueCumplen xs p
+                        | otherwise = []
+
+--Ejercicio 15
 
 
 
