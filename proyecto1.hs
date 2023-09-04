@@ -1,3 +1,6 @@
+--Proyecto 1
+--Este trabajo fue realizado en conjunto por Tomás Castrillon y Hernán Moisset
+
 --Ejercicio 1
 --Apartado a)
 esCero :: Int -> Bool
