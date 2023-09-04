@@ -318,18 +318,28 @@ primIguales' xs = primIgualesA' (head xs) xs
 cuantGen :: (b->b->b) -> b -> [a] -> (a->b) -> b
 cuantGen op z [] t = z
 cuantGen op z (x:xs) t = op (t x) (cuantGen op z xs t)
+--ghci> cuantGen (*) 1 [3,7,8,0] (+2)
+--900
 
 paraTodoGen :: [a] -> (a->Bool) -> Bool
 paraTodoGen xs t = cuantGen (&&) True xs t
+--ghci> paraTodoGen [2,3,4,5,6] (/=1)
+--True
 
 existeGen :: [a] -> (a->Bool) -> Bool
 existeGen xs t = cuantGen (||) False xs t
+--ghci> existeGen [False,True,True] (==True)
+--True
 
 sumatoriaGen :: [a] -> (a->Int) -> Int
 sumatoriaGen xs f = cuantGen (+) 0 xs f
+--ghci> sumatoriaGen [2,3,4,5] (+1)
+--18
 
 productoriaGen :: [a] -> (a->Int) -> Int
 productoriaGen xs f = cuantGen (*) 1 xs f
+--ghci> productoriaGen [1,6,5,3] (*2)
+--1440
 
 --Ejercicio 13
 distanciaEdicion :: [Char] -> [Char] -> Int
@@ -337,13 +347,16 @@ distanciaEdicion xs [] = length xs
 distanciaEdicion [] ys = length ys
 distanciaEdicion (x:xs) (y:ys) | x==y = distanciaEdicion xs ys
                                | otherwise = 1 + distanciaEdicion xs ys
+--ghci> distanciaEdicion "abc" "abcd"
+--1
 
 --Ejercicio 14
 primQueCumplen :: (Eq a)=>[a] -> (a->Bool)->[a]
 primQueCumplen [] p = []
 primQueCumplen (x:xs) p | p x = x : primQueCumplen xs p
                         | otherwise = []
-
+--ghci> primQueCumplen [3,2,1,7,8,9] (<5)
+--[3,2,1]
 
 
 
