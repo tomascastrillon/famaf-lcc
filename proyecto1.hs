@@ -1,4 +1,3 @@
-import Language.Haskell.TH (prim)
 --Ejercicio 1
 --Apartado a)
 esCero :: Int -> Bool
@@ -316,6 +315,21 @@ primIguales' xs = primIgualesA' (head xs) xs
 --[]        
 
 --Ejercicio 12
+cuantGen :: (b->b->b) -> b -> [a] -> (a->b) -> b
+cuantGen op z [] t = z
+cuantGen op z (x:xs) t = op (t x) (cuantGen op z xs t)
+
+paraTodoGen :: [a] -> (a->Bool) -> Bool
+paraTodoGen xs t = cuantGen (&&) True xs t
+
+existeGen :: [a] -> (a->Bool) -> Bool
+existeGen xs t = cuantGen (||) False xs t
+
+sumatoriaGen :: [a] -> (a->Int) -> Int
+sumatoriaGen xs f = cuantGen (+) 0 xs f
+
+productoriaGen :: [a] -> (a->Int) -> Int
+productoriaGen xs f = cuantGen (*) 1 xs f
 
 --Ejercicio 13
 distanciaEdicion :: [Char] -> [Char] -> Int
@@ -329,8 +343,6 @@ primQueCumplen :: (Eq a)=>[a] -> (a->Bool)->[a]
 primQueCumplen [] p = []
 primQueCumplen (x:xs) p | p x = x : primQueCumplen xs p
                         | otherwise = []
-
---Ejercicio 15
 
 
 
