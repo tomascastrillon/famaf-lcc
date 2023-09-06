@@ -360,15 +360,3 @@ primQueCumplen (x:xs) p | p x = x : primQueCumplen xs p
                         | otherwise = []
 --ghci> primQueCumplen [3,2,1,7,8,9] (<5)
 --[3,2,1]
-
-
-
-
-
-
-
-
-
-
-
-
