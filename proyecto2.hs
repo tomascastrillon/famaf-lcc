@@ -70,11 +70,69 @@ data Deportista = Ajedrecista --Constructor sin argumentos
 --Apartado c) 
 contar_velocistas :: [Deportista] -> Int 
 contar_velocistas [] = 0
-contar_velocistas ((Velocista a):xs) = 1+ contar_velocistas xs
+contar_velocistas ((Velocista a):xs) = 1 + contar_velocistas xs
 contar_velocistas (x:xs) = contar_velocistas xs 
 
 --Apartado d)
 contar_futbolistas :: [Deportista] -> Zona -> Int
 contar_futbolistas [] z = 0
-contar_futbolistas ((Futbolista zn n p a):xs) z | (z==zn) = 1 + contar_futbolistas xs z 
+contar_futbolistas ((Futbolista zn n p a):xs) z | (z==zn) = 1 + contar_futbolistas xs z -- Corregir
                                                 | otherwise = contar_futbolistas xs z
+
+--Apartado e)
+contar_futbolistas' :: [Deportista] -> Zona -> Int
+contar_futbolistas' [] z = 0
+contar_futbolistas' xs z = length (filter fbenzona xs)
+   where
+    fbenzona (Futbolista zn _ _ _)= zn == z
+    fbenzona _ = False
+
+--Ejercicio 5
+--Apartado a)
+sonidoNatural :: NotaBasica -> Int
+sonidoNatural Do = 0
+sonidoNatural Re = 2
+sonidoNatural Mi = 4
+sonidoNatural Fa = 5
+sonidoNatural Sol = 7
+sonidoNatural La = 9
+sonidoNatural Si = 11
+
+--Apartado b)
+data Alteracion = Bemol | Natural | Sostenido deriving (Eq)
+
+--Apartado c)
+data NotaMusical = Nota NotaBasica Alteracion 
+
+--Apartado d)
+sonidoCromatico :: NotaMusical -> Int
+sonidoCromatico (Nota nb a)  |(a==Bemol) = (sonidoNatural nb) - 1
+                             |(a==Natural) = (sonidoNatural nb) 
+                             |(a==Sostenido) = (sonidoNatural nb) +1
+                
+--Apartado e)
+instance Eq NotaMusical
+  where
+    n1==n2 = sonidoCromatico n1 == sonidoCromatico n2
+
+--Apartado f)
+instance Ord NotaMusical
+  where
+    n1 <= n2 = sonidoCromatico n1 <= sonidoCromatico n2
+
+--Ejercicio 6
+--Apartado a)
+primerElemento :: [a] -> Maybe a
+primerElemento [] = Nothing
+primerElemento xs = Just(head xs) 
+
+--Ejercicio 7
+data Cola = VaciaC | Encolada Deportista Cola 
+--Apartado a)
+atender :: Cola -> Maybe Cola
+atender VaciaC = Nothing
+atender (Encolada d c) = Just c 
+
+--Apartado b)
+encolar :: Deportista -> Cola -> Cola
+encolar dp c = Encolada dp 
