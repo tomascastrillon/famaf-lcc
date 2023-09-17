@@ -1,3 +1,5 @@
+--Proyecto 2
+--Este trabajo fue realizado en conjunto por Tomás Castrillon y Hernán Moisset
 --Ejercicio 1
 --Apartado a)
 data Carrera = Matematica | Fisica | Computacion | Astronomia
