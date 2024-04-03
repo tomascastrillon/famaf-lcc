@@ -10,23 +10,29 @@ unsigned int array_from_file(int array[],unsigned int max_size,const char *filep
     if(length>max_size){
         printf("error");
         fclose(file);
-        return length;
+    }else{
+        for (unsigned int i=0; i<length;i++){
+            fscanf(file, "%d", &array[i]);
+        }
+        fclose(file);
     }
-    for (unsigned int i=0; i<length;i++){
-        fscanf(file, "%d", &array[i]);
-    }
-    fclose(file);
     return length;
 }   
 
 
-void array_dump(int a[], unsigned int length) {
+void array_dump(int a[], unsigned int length) {   
+
+    if (length<100000){    
     printf("[");
     for(unsigned int i=0;i<length;i++){
         printf("%i",a[i]);
-        if(i<4){
+        if(i<(length-1)){
             printf(",");
         }
     }
     printf("]\n");
+    }
+    else{
+        printf("El arreglo es mayor al tam maximo asignado.\n");
+    }
 }

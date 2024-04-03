@@ -1,8 +1,9 @@
 /* First, the standard lib includes, alphabetically ordered */
 #include <assert.h>
-#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
+#include "array_helpers.h"
 
 /* Maximum allowed length of the array */
 #define MAX_SIZE 100000
@@ -41,39 +42,6 @@ char *parse_filepath(int argc, char *argv[]) {
     return result;
 }
 
-unsigned int array_from_file(int array[],unsigned int max_size,const char *filepath) {
-    unsigned int length;
-    FILE *file = fopen(filepath,"r");
-    fscanf(file,"%u",&length);
-    if(length>max_size){
-        printf("error");
-        fclose(file);
-    }else{
-        for (unsigned int i=0; i<length;i++){
-            fscanf(file, "%d", &array[i]);
-            
-        }
-        fclose(file);
-    }
-    return length;
-}   
-
-void array_dump(int a[], unsigned int length) {   
-    if (length<100000){    
-    printf("[");
-    for(unsigned int i=0;i<length;i++){
-        printf("%i",a[i]);
-        if(i<(length-1)){
-            printf(",");
-        }
-    }
-    printf("]\n");
-    }
-    else{
-        printf("El arreglo es mayor al tam maximo asignado.\n");
-    }
-}
-
 
 int main(int argc, char *argv[]) {
     char *filepath = NULL;
@@ -87,6 +55,23 @@ int main(int argc, char *argv[]) {
     /* parse the file to fill the array and obtain the actual length */
     unsigned int length = array_from_file(array, MAX_SIZE, filepath);
     
+    int j=(length-1);
+
+    for (unsigned int i = 0; i < (length/2); i++){    
+        array_swap(array,i,j);
+        j=j-1;
+    }
+ 
     array_dump(array, length);
+    if (length==0){
+        printf("El arreglo es vacio\n");
+    }else if(length<100000){
+        bool sorted=array_is_sorted(array,length);
+        if(sorted){
+        printf("El arreglo esta ordenado\n");
+        }else {
+        printf("El arreglo no esta ordenado\n");
+        }
+    }
     return EXIT_SUCCESS;
 }

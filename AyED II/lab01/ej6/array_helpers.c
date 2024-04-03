@@ -1,7 +1,7 @@
 #include "array_helpers.h"
 #include <stdio.h>
-#include <stdbool.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 unsigned int array_from_file(int array[],unsigned int max_size,const char *filepath) {
     unsigned int length;
@@ -14,13 +14,13 @@ unsigned int array_from_file(int array[],unsigned int max_size,const char *filep
         for (unsigned int i=0; i<length;i++){
             fscanf(file, "%d", &array[i]);
         }
-    fclose(file);
+        fclose(file);
     }
     return length;
 }   
 
-void array_dump(int a[], unsigned int length) {   
 
+void array_dump(int a[], unsigned int length) {
     if (length<100000){    
     printf("[");
     for(unsigned int i=0;i<length;i++){
@@ -36,7 +36,6 @@ void array_dump(int a[], unsigned int length) {
     }
 }
 
-
 bool array_is_sorted(int a[], unsigned int length){
     bool sorted=true;
     unsigned int i=0;
@@ -47,4 +46,10 @@ bool array_is_sorted(int a[], unsigned int length){
         i=i+1;
     }
     return sorted;
+}
+
+void array_swap(int a[], unsigned int i, unsigned int j){
+    int aux=a[i];
+    a[i]=a[j];
+    a[j]=aux;
 }

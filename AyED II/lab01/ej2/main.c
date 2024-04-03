@@ -24,42 +24,25 @@ void print_help(char *program_name) {
            program_name);
 }
 
-char *parse_filepath(int argc, char *argv[]) {
-    /* Parse the filepath given by command line argument. */
-    char *result = NULL;
-    // Program takes exactly two arguments
-    // (the program's name itself and the input-filepath)
-    bool valid_args_count = (argc == 2);
-
-    if (!valid_args_count) {
-        print_help(argv[0]);
-        exit(EXIT_FAILURE);
-    }
-
-    result = argv[1];
-
-    return result;
-}
-
-unsigned int array_from_stdin(int array[],unsigned int max_size) {
+unsigned int array_from_file(int array[],unsigned int max_size) {
     unsigned int length;
-    printf("Introduzca un array:");
-        
-    scanf("%u",&length);
+    FILE *file = stdin;
+    fscanf(file,"%u",&length);
     if(length>max_size){
-        printf("error no suficiente espacio");
-    }
-
-    for (unsigned int i=0; i<max_size;i++){
-        if(scanf("%i",&array[i])==EOF){
-            break;
+        fclose(file);
+    }else{
+        for (unsigned int i=0; i<length;i++){
+            fscanf(file, "%d", &array[i]);
         }
+        fclose(file);
     }
     return length;
 }   
 
-void array_dump(int a[], unsigned int length) {
-    printf("[");
+void array_dump(int a[], unsigned int length) {   
+
+    if (length<100000){    
+    printf("\n[");
     for(unsigned int i=0;i<length;i++){
         printf("%i",a[i]);
         if(i<(length-1)){
@@ -67,14 +50,18 @@ void array_dump(int a[], unsigned int length) {
         }
     }
     printf("]\n");
+    }
+    else{
+        printf("El arreglo es mayor al tam maximo asignado.\n");
+    }
 }
 
-int main() {    
-    /* create an array of MAX_SIZE elements */
+int main() {
+     /* create an array of MAX_SIZE elements */
     int array[MAX_SIZE];
     
     /* parse the file to fill the array and obtain the actual length */
-    unsigned int length = array_from_stdin(array, MAX_SIZE);
+    unsigned int length = array_from_file(array, MAX_SIZE);
     
     array_dump(array, length);
     return EXIT_SUCCESS;
