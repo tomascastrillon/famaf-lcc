@@ -77,9 +77,7 @@ queue_elem queue_first(queue q) {
 }
 unsigned int queue_size(queue q) {
     assert(invrep(q));
-    unsigned int size=0;
-    size=q->size;
-    return size;
+    return q->size;
 }
 
 queue queue_dequeue(queue q) {

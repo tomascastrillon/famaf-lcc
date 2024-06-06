@@ -42,13 +42,7 @@ stack stack_pop(stack s){
 }
 
 unsigned int stack_size(stack s){
-    unsigned int size=0;
-    stack st=s;
-    for (size_t i = 0; st!=NULL; i++){
-        size++;
-        st=st->previous;
-    }
-    return size;
+    return s->size;
 }
 
 stack_elem stack_top(stack s){
